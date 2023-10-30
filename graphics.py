@@ -59,7 +59,7 @@ class Cell:  #create Cell class
         self.y1 = None
         self.y2 = None
         self.win = win
-        self.filled = False
+        self.filled = 0
 
     def draw(self):  #draw method used to draw the borders of the cell if they exist
         if self.has_left_wall == True:
@@ -124,6 +124,13 @@ class Board:  #create Board class
                     self.cells[i][j].y2 = self.y4
                 self.cells[i][j].draw()
      
+    def draw_x(self, x1, y1, x2, y2):  #function that draws a blue "X"
+        win.canvas.create_line(x1, y1, x2, y2, fill = "Blue", width = 8)
+        win.canvas.create_line(x1, y2, x2, y1, fill = "Blue", width = 8)
+
+    def draw_o(self, x1, y1, x2, y2 ):  #function that draws a red "O"
+        win.canvas.create_oval(x1, y1, x2, y2, outline = "Red", width = 8)
+
 board = Board(win, p1, p2)  #define the gameboard
 
 class Scoreboard:  #creates the scoreboard class
@@ -139,9 +146,19 @@ class Scoreboard:  #creates the scoreboard class
         player1_name.place(x = 25, y = 10)
         player2_name = Label(win.root, text = self.name2, bg = "White", fg = "Red", font = ("Arial", 20, "bold", "underline"))
         player2_name.place(x = 825, y = 10)
+        global player1_score
         player1_score = Label(win.root, text = self.score1, bg = "White", fg = "Blue", font = ("Arial", 20, "bold"))
         player1_score.place(x = 75, y = 50)
+        global player2_score
         player2_score = Label(win.root, text = self.score2, bg = "White", fg = "Red", font = ("Arial", 20, "bold"))
         player2_score.place(x = 885, y = 50)
+        global player_turn
         player_turn = Label(win.root, text = f"{self.turn}'s turn!", bg = "White", fg = "Green", font = ("Arial", 30, "bold"))
         player_turn.place(x = 300, y = 25)
+
+    def update_scoreboard(self):  #scoreboard updating function that updates player turn and display
+        if self.turn == self.name1:
+            self.turn = self.name2
+        elif self.turn == self.name2:
+            self.turn = self.name1
+        player_turn.config(text = f"{self.turn}'s turn!")
