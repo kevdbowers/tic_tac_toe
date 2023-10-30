@@ -1,11 +1,10 @@
-from graphics import Window, Point, Board  #importing Window, Point and Board classes from graphics.py
+from graphics import win  #importing necessary variables from graphics.py
+from buttons import players1_button, players2_button  #importing necessary variables from buttons.py
 
-width = 1000  #define initial variables for window size
-height = 800
+def main():  #the main function that runs our program
+    players1_button.place(x = 200, y = 300)  #placing the initial buttons to choose how many players there are
+    players2_button.place(x = 600, y = 300)
 
-win = Window(width, height)  #create the window and then define variables to create the gameboard within the window
-p1 = Point(width / 5, height / 5)
-p2 = Point(4*width / 5, 4*height / 5)
-board = Board(win, p1, p2)
+main()  #running our main function
 
 win.wait_for_close()  #keeps the graphics running until game is closed

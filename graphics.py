@@ -1,4 +1,4 @@
-from tkinter import Tk, BOTH, Canvas  #importing necessary libraries
+from tkinter import Tk, BOTH, Canvas, Label  #importing from tkinter library
 
 class Window:  #create Window class
 
@@ -28,10 +28,17 @@ class Window:  #create Window class
     def draw_line(self, line, fill_color = "black"):  #draws a line in the window
         line.draw(self.canvas, fill_color)
 
+width = 1000  #define initial variables for window size and create window
+height = 800
+win = Window(width, height)
+
 class Point:  #create Point class
     def __init__(self, x, y):  #constructor stores point coordinates
         self.x = x
         self.y = y
+
+p1 = Point(width / 5, height / 5)  #define points used for gameboard creation
+p2 = Point(4 * width / 5, 4 * height / 5)
 
 class Line:  #create Line class
     def __init__(self, point_1, point_2):  #constructor takes and holds a pair of coordinates
@@ -39,7 +46,7 @@ class Line:  #create Line class
         self.point_2 = point_2
         
     def draw(self, win, fill_color = "black"):  #draw method that creates a line between two points
-        win.create_line(self.point_1.x, self.point_1.y, self.point_2.x, self.point_2.y, fill = fill_color, width = 2)
+        win.create_line(self.point_1.x, self.point_1.y, self.point_2.x, self.point_2.y, fill = fill_color, width = 4)
 
 class Cell:  #create Cell class
     def __init__(self, win):  #constructor creating the variables for each cell
@@ -81,7 +88,6 @@ class Board:  #create Board class
         self.y3 = self.y4 - (self.y4 - self.y1)/3
 
         self.create_cells()
-        self.draw_cells()
         
     def create_cells(self):  #method for creating the cells that makeup the gameboard
         self.cells = []
@@ -118,3 +124,24 @@ class Board:  #create Board class
                     self.cells[i][j].y2 = self.y4
                 self.cells[i][j].draw()
      
+board = Board(win, p1, p2)  #define the gameboard
+
+class Scoreboard:  #creates the scoreboard class
+    def __init__(self, name2 = "Computer"):  #constructor for the scoreboard that holds default names and scores for the player(s)
+        self.name1 = "Player 1"
+        self.name2 = name2
+        self.turn = self.name1
+        self.score1 = 0
+        self.score2 = 0
+
+    def create_scoreboard(self):  #scoreboard creating function that creates a label for each player to display their score and a label telling who's turn it is
+        player1_name = Label(win.root, text = self.name1, bg = "White", fg = "Blue", font = ("Arial", 20, "bold", "underline"))
+        player1_name.place(x = 25, y = 10)
+        player2_name = Label(win.root, text = self.name2, bg = "White", fg = "Red", font = ("Arial", 20, "bold", "underline"))
+        player2_name.place(x = 825, y = 10)
+        player1_score = Label(win.root, text = self.score1, bg = "White", fg = "Blue", font = ("Arial", 20, "bold"))
+        player1_score.place(x = 75, y = 50)
+        player2_score = Label(win.root, text = self.score2, bg = "White", fg = "Red", font = ("Arial", 20, "bold"))
+        player2_score.place(x = 885, y = 50)
+        player_turn = Label(win.root, text = f"{self.turn}'s turn!", bg = "White", fg = "Green", font = ("Arial", 30, "bold"))
+        player_turn.place(x = 300, y = 25)
