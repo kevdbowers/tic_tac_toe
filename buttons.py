@@ -32,7 +32,9 @@ def players2_button_command():  #function that activates when the players2 butto
     scoreboard.create_scoreboard()
     fill_board()
 
-### A series of button functions corresponding to the cell in which the button is located that activate when a button is selected, remove the button, then occupy the cell and update the scoreboard as necessary
+###     A series of button functions corresponding to the cell in which the button is located that activate when a button is selected, remove the button,
+###     then occupy the cell, check if anyone wins, and update the scoreboard as necessary
+
 def board_select00():
     button00.place_forget()
     if scoreboard.turn == scoreboard.name1:
@@ -40,8 +42,9 @@ def board_select00():
         board.cells[0][0].filled = 1
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x1 + 30, board.y1 + 18, board.x2 - 30, board.y2 - 18)
-        board.cells[0][0].filled -1
-    scoreboard.update_scoreboard()
+        board.cells[0][0].filled = -1
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[0][0])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select10():
     button10.place_forget()
@@ -51,7 +54,8 @@ def board_select10():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x2 + 30, board.y1 + 18, board.x3 - 30, board.y2 - 18)
         board.cells[1][0].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[1][0])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select20():
     button20.place_forget()
@@ -61,7 +65,8 @@ def board_select20():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x3 + 30, board.y1 + 18, board.x4 - 30, board.y2 - 18)
         board.cells[2][0].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[2][0])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select01():
     button01.place_forget()
@@ -71,7 +76,8 @@ def board_select01():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x1 + 30, board.y2 + 18, board.x2 - 30, board.y3 - 18)
         board.cells[0][1].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[0][1])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select11():
     button11.place_forget()
@@ -81,7 +87,8 @@ def board_select11():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x2 + 30, board.y2 + 18, board.x3 - 30, board.y3 - 18)
         board.cells[1][1].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[1][1])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select21():
     button21.place_forget()
@@ -91,7 +98,8 @@ def board_select21():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x3 + 30, board.y2 + 18, board.x4 - 30, board.y3 - 18)
         board.cells[2][1].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[2][1])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select02():
     button02.place_forget()
@@ -101,7 +109,8 @@ def board_select02():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x1 + 30, board.y3 + 18, board.x2 - 30, board.y4 - 18)
         board.cells[0][2].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[0][2])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select12():
     button12.place_forget()
@@ -111,7 +120,8 @@ def board_select12():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x2 + 30, board.y3 + 18, board.x3 - 30, board.y4 - 18)
         board.cells[1][2].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[1][2])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 def board_select22():
     button22.place_forget()
@@ -121,7 +131,8 @@ def board_select22():
     if scoreboard.turn == scoreboard.name2:
         board.draw_o(board.x3 + 30, board.y3 + 18, board.x4 - 30, board.y4 - 18)
         board.cells[2][2].filled = -1
-    scoreboard.update_scoreboard()
+    winner = board.victory_check(scoreboard.turn, scoreboard.turn_count, board.cells[2][2])
+    scoreboard.turn_count = scoreboard.update_scoreboard(scoreboard.turn_count, winner)
 
 players1_button = Button(win.root, text = "1 Player", bg = "Blue", font = ("Arial", 20, "bold"), height = 3, width = 9, command = players1_button_command)  #creating the homepage buttons to select number of players
 players2_button = Button(win.root, text = "2 Players", bg = "Red", font = ("Arial", 20, "bold"), height = 3, width = 9, command = players2_button_command)

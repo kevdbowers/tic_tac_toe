@@ -130,6 +130,42 @@ class Board:  #create Board class
 
     def draw_o(self, x1, y1, x2, y2 ):  #function that draws a red "O"
         win.canvas.create_oval(x1, y1, x2, y2, outline = "Red", width = 8)
+    
+    def victory_check(self, turn, turn_count, cell):  #function to check if there is a game winner and display a victory message if so
+        turn_count += 1
+        winner = None
+        fill_value = cell.filled
+        if turn_count >= 5:
+            if board.cells[0][0].filled == fill_value:
+                if (
+                    (board.cells[0][0].filled == board.cells[1][0].filled and board.cells[0][0].filled == board.cells[2][0].filled) or
+                    (board.cells[0][0].filled == board.cells[0][1].filled and board.cells[0][0].filled == board.cells[0][2].filled)
+                ):
+                    winner = turn
+            if board.cells[2][2].filled == fill_value:
+                if (
+                    (board.cells[2][0].filled == board.cells[2][2].filled and board.cells[2][1].filled == board.cells[2][2].filled) or
+                    (board.cells[0][2].filled == board.cells[2][2].filled and board.cells[1][2].filled == board.cells[2][2].filled)
+                ):
+                     winner = turn
+            if board.cells[1][1].filled == fill_value:
+                if (
+                    (board.cells[0][0].filled == board.cells[1][1].filled and board.cells[1][1].filled == board.cells[2][2].filled) or
+                    (board.cells[1][0].filled == board.cells[1][1].filled and board.cells[1][1].filled == board.cells[1][2].filled) or
+                    (board.cells[2][0].filled == board.cells[1][1].filled and board.cells[1][1].filled == board.cells[0][2].filled) or
+                    (board.cells[0][1].filled == board.cells[1][1].filled and board.cells[1][1].filled == board.cells[2][1].filled)
+                ):
+                    winner = turn
+            if winner != None:
+                victory_color = "Blue"
+                if winner != "Player 1":
+                    victory_color = "Red"
+                victory_label = Label(win.root, text = f"{turn} wins this round!", bg = "White", fg = victory_color, font = ("Arial", 30, "bold"))
+                victory_label.place(x = 200, y = 25)
+        if turn_count == 9 and winner == None:
+            victory_label = Label(win.root, text = f"This round was a Tie!", bg = "White", fg = "Green", font = ("Arial", 30, "bold"))
+            victory_label.place(x = 250, y = 25)
+        return winner
 
 board = Board(win, p1, p2)  #define the gameboard
 
@@ -138,6 +174,7 @@ class Scoreboard:  #creates the scoreboard class
         self.name1 = "Player 1"
         self.name2 = name2
         self.turn = self.name1
+        self.turn_count = 0
         self.score1 = 0
         self.score2 = 0
 
@@ -155,10 +192,16 @@ class Scoreboard:  #creates the scoreboard class
         global player_turn
         player_turn = Label(win.root, text = f"{self.turn}'s turn!", bg = "White", fg = "Green", font = ("Arial", 30, "bold"))
         player_turn.place(x = 300, y = 25)
-
-    def update_scoreboard(self):  #scoreboard updating function that updates player turn and display
+    
+    def update_scoreboard(self, turn_count, winner):  #scoreboard updating function that updates player turn and display
         if self.turn == self.name1:
             self.turn = self.name2
         elif self.turn == self.name2:
             self.turn = self.name1
-        player_turn.config(text = f"{self.turn}'s turn!")
+        turn_count += 1
+
+        if turn_count == 9 or winner != None:
+            player_turn.config(text = f"")
+        else:
+            player_turn.config(text = f"{self.turn}'s turn!")
+        return turn_count
