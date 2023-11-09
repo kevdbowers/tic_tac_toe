@@ -1,7 +1,8 @@
 from graphics import win, board, Scoreboard  #importing variables and a class from graphics.py
 from tkinter import Button  #importing from tkinter library
+import random  #importing random library
 
-def fill_board():  #function that places interactable buttons in each of the gameboard squares
+def fill_board():  #function that places interactable buttons in each of the gameboard squares and creates a list for use in computer play
     button00.place(x = board.x1 + 5, y = board.y1 + 5)
     button10.place(x = board.x2 + 5, y = board.y1 + 5)
     button20.place(x = board.x3 + 5, y = board.y1 + 5)
@@ -11,6 +12,19 @@ def fill_board():  #function that places interactable buttons in each of the gam
     button02.place(x = board.x1 + 5, y = board.y3 + 5)
     button12.place(x = board.x2 + 5, y = board.y3 + 5)
     button22.place(x = board.x3 + 5, y = board.y3 + 5)
+    global randlist
+    randlist = {
+        0: button00,
+        1: button10,
+        2: button20,
+        3: button01,
+        4: button11,
+        5: button21,
+        6: button02,
+        7: button12,
+        8: button22,
+        9: 0
+        }
 
 def empty_board():  #function that removes any buttons on the gameboard
     button00.place_forget()
@@ -49,6 +63,7 @@ def players2_button_command():  #function that activates when the players2 butto
 def board_select00():
     global piece00_1, piece00_2
     button00.place_forget()
+    randlist[0] = 0
     if scoreboard.turn == scoreboard.name1:
         piece00_1, piece00_2 = board.draw_x(board.x1 + 30, board.y1 + 18, board.x2 - 30, board.y2 - 18)
         board.cells[0][0].filled = 1
@@ -61,10 +76,13 @@ def board_select00():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select10():
     global piece10_1, piece10_2
     button10.place_forget()
+    randlist[1] = 0
     if scoreboard.turn == scoreboard.name1:
         piece10_1, piece10_2 = board.draw_x(board.x2 + 30, board.y1 + 18, board.x3 - 30, board.y2 - 18)
         board.cells[1][0].filled = 1
@@ -77,10 +95,13 @@ def board_select10():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select20():
     global piece20_1, piece20_2
     button20.place_forget()
+    randlist[2] = 0
     if scoreboard.turn == scoreboard.name1:
         piece20_1, piece20_2 = board.draw_x(board.x3 + 30, board.y1 + 18, board.x4 - 30, board.y2 - 18)
         board.cells[2][0].filled = 1
@@ -93,10 +114,13 @@ def board_select20():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select01():
     global piece01_1, piece01_2
     button01.place_forget()
+    randlist[3] = 0
     if scoreboard.turn == scoreboard.name1:
         piece01_1, piece01_2 = board.draw_x(board.x1 + 30, board.y2 + 18, board.x2 - 30, board.y3 - 18)
         board.cells[0][1].filled = 1
@@ -109,10 +133,13 @@ def board_select01():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select11():
     global piece11_1, piece11_2
     button11.place_forget()
+    randlist[4] = 0
     if scoreboard.turn == scoreboard.name1:
         piece11_1, piece11_2 = board.draw_x(board.x2 + 30, board.y2 + 18, board.x3 - 30, board.y3 - 18)
         board.cells[1][1].filled = 1
@@ -125,10 +152,13 @@ def board_select11():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select21():
     global piece21_1, piece21_2
     button21.place_forget()
+    randlist[5] = 0
     if scoreboard.turn == scoreboard.name1:
         piece21_1, piece21_2 = board.draw_x(board.x3 + 30, board.y2 + 18, board.x4 - 30, board.y3 - 18)
         board.cells[2][1].filled = 1
@@ -141,10 +171,13 @@ def board_select21():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select02():
     global piece02_1, piece02_2
     button02.place_forget()
+    randlist[6] = 0
     if scoreboard.turn == scoreboard.name1:
         piece02_1, piece02_2 = board.draw_x(board.x1 + 30, board.y3 + 18, board.x2 - 30, board.y4 - 18)
         board.cells[0][2].filled = 1
@@ -157,10 +190,13 @@ def board_select02():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select12():
     global piece12_1, piece12_2
     button12.place_forget()
+    randlist[7] = 0
     if scoreboard.turn == scoreboard.name1:
         piece12_1, piece12_2 = board.draw_x(board.x2 + 30, board.y3 + 18, board.x3 - 30, board.y4 - 18)
         board.cells[1][2].filled = 1
@@ -173,10 +209,13 @@ def board_select12():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def board_select22():
     global piece22_1, piece22_2
     button22.place_forget()
+    randlist[8] = 0
     if scoreboard.turn == scoreboard.name1:
         piece22_1, piece22_2 = board.draw_x(board.x3 + 30, board.y3 + 18, board.x4 - 30, board.y4 - 18)
         board.cells[2][2].filled = 1
@@ -189,6 +228,8 @@ def board_select22():
     if winner != None:
         empty_board()
         play_again_button.place(x = 400, y = 675)
+    else:
+        computer_turn()
 
 def play_again_button_command():  #command for the play_again button that clears the gameboard and resets round specific variables, built with error exceptions to test functionality but needs to be simplified
     play_again_button.place_forget()
@@ -251,6 +292,13 @@ def play_again_button_command():  #command for the play_again button that clears
     scoreboard.turn = scoreboard.name1
     scoreboard.turn_count = 0
     fill_board()
+
+def computer_turn():  #function to check if a computer is playing and randomly make moves if there is no second player
+    if scoreboard.turn == "Computer":
+        randbutton = 9
+        while randlist[randbutton] == 0:
+            randbutton = random.randint(0, 8)
+        randlist[randbutton].invoke()
 
 players1_button = Button(win.root, text = "1 Player", bg = "Blue", font = ("Arial", 20, "bold"), height = 3, width = 9, command = players1_button_command)  #creating the homepage buttons to select number of players
 players2_button = Button(win.root, text = "2 Players", bg = "Red", font = ("Arial", 20, "bold"), height = 3, width = 9, command = players2_button_command)
